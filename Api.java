@@ -1,3 +1,5 @@
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -17,7 +19,7 @@ public abstract class Api {
 	 */
     public static String readJson(String Url) throws Exception{
 
-    	URL url = new URL(Url);
+    	URL url = Urls.create(Url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     	HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     	conn.setRequestMethod("GET");
     	BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
