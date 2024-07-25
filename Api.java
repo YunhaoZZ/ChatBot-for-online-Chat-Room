@@ -1,3 +1,4 @@
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -23,7 +24,7 @@ public abstract class Api {
     	BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
     	StringBuilder result = new StringBuilder();
     	String content;
-    	while((content = rd.readLine()) != null) {
+    	while((content = BoundedLineReader.readLine(rd, 5_000_000)) != null) {
     		result.append(content);
     	}
     	return result.toString();
